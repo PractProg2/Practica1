@@ -18,7 +18,7 @@ Node * node_init (){
     n = (Node *)malloc (sizeof(Node));
     if (!n) return NULL;
 
-    n->name = "";
+    strcpy(n->name, " ");
     n->id = -1;
     n->nConnect = 0;
     n->label = WHITE;
@@ -89,8 +89,8 @@ Status node_setNConnect (Node *n, const int cn){
 /* En caso de error devolvemos 27*/
 int node_cmp (const void *n1, const void *n2){
     if (!n1 || !n2) return 27;
-    Node *aux1 = (Node *)n1;
-    Node *aux2 = (Node *)n2;
+    Node *aux1 = (Node *) n1;
+    Node *aux2 = (Node *) n2;
     
     if (aux1->id < aux2->id) return -1;
     else if (aux1->id > aux2->id) return 1;
@@ -103,7 +103,7 @@ int node_cmp (const void *n1, const void *n2){
 void * node_copy (const void *src){
     if (!src) return NULL;
 
-    Node *n = (Node *)src;
+    Node *n = (Node *) src;
     Node *aux;
     aux = (Node *) malloc(sizeof(Node));
     if (!aux) return NULL;
@@ -117,11 +117,10 @@ void * node_copy (const void *src){
 }
 
 int node_print (FILE *pf, const void *n){
-    // return fprintf();
+    
     if (!pf || !n) return -1;
     
     Node *aux = (Node *) n;
-
-    return fprintf(pf, "Node %s, with Id: %ld, connected with: %d, and with label: %s", aux->name, aux->id, aux->nConnect, aux->label);
+    return fprintf(pf, "[%s, %ld, %d, %d]", aux->name, aux->id, aux->nConnect, aux->label);
 
 }

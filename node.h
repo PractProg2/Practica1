@@ -13,6 +13,7 @@
 #ifndef NODE_H_
 #define NODE_H_
 #include "types.h"
+#include <stdio.h>
 /**
 * @brief Label to charactrize the node state (to be used in P2)
 *
