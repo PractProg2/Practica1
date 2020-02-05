@@ -122,6 +122,6 @@ int node_print (FILE *pf, const void *n){
     
     Node *aux = (Node *) n;
 
-    return fprintf(pf, "Node %s, with Id: %lf, connected with: %d, and with label: %s", aux->name, aux->id, aux->nConnect, aux->label);
+    return fprintf(pf, "Node %s, with Id: %ld, connected with: %d, and with label: %s", aux->name, aux->id, aux->nConnect, aux->label);
 
 }
