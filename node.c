@@ -14,7 +14,7 @@ Label label; /*!<Node state */
 
 
 Node * node_init (){
-    Node *n;
+    Node *n = NULL;
     n = (Node *)malloc (sizeof(Node));
     if (!n) return NULL;
 
@@ -104,7 +104,7 @@ void * node_copy (const void *src){
     if (!src) return NULL;
 
     Node *n = (Node *) src;
-    Node *aux;
+    Node *aux = NULL;
     aux = (Node *) malloc(sizeof(Node));
     if (!aux) return NULL;
 
