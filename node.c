@@ -112,6 +112,8 @@ void * node_copy (const void *src){
     aux->id = n->id;
     aux->label = n->label;
     aux->nConnect = n->nConnect;
+    
+    free(aux);
 
     return aux;
 }
