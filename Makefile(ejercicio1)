@@ -3,9 +3,9 @@
 CC = gcc
 CFLAG = -Wall -ansi -pedantic
 
-all: exe
+all: p1_e1
 
-exe: p1_e1.o node.o
+p1_e1: p1_e1.o node.o
 
 
 	$(CC) $(CFLAGS) p1_e1.o node.o -lm -o exe
@@ -22,4 +22,4 @@ p1_e1.o: p1_e1.c types.h
 
 
 clean: 
-	rm -f *.o exe
+	rm -f *.o p1_e1
