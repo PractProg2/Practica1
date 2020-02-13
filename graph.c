@@ -214,6 +214,7 @@ int graph_print(FILE *pf, const Graph *g){
     for (i=0; i < g->num_nodes; i++){
         cont += node_print(pf, g->nodes[i]);
         printf("\n");
+
         /*da error en la funcion graph_getConnectionsIndex
         array = graph_getConnectionsFrom((Graph *)g, node_getId(g->nodes[i]));
 
@@ -228,26 +229,3 @@ int graph_print(FILE *pf, const Graph *g){
     return cont;
 }
 
-long *devuelveArray(Graph *g, long nId){
-    int i, index=-1,cont=0;
-    int j=0;
-    long *aux = NULL;
-    if (!g) return NULL;
-
-    index = find_node_index(g, nId);
-
-    cont = node_getConnect(g->nodes[index]);
-    if (cont == 0) return NULL;
-    aux = (long *)malloc(cont * sizeof(long));
-
-    if (!aux) return NULL;
-
-    for (i=0; i<cont; i++){
-        if (g->connections[nId][i] == TRUE){
-            aux[j] = i;
-            j++; 
-        }
-    }
-
-    return aux;
-}

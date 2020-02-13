@@ -120,7 +120,4 @@ int graph_print(FILE *pf, const Graph *g);
 */
 Status graph_readFromFile(FILE *fin, Graph *g);
 
-long *devuelveArray(Graph *g, long nId);
-
-
 #endif /* GRAPH_H */
