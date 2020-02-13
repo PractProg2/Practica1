@@ -35,28 +35,40 @@ int main(){
     printf("Insertando nodo 1...resultado...: %d\n", graph_insertNode(grafo, nodito));
     printf("Insertando nodo 2...resultado...: %d\n", graph_insertNode(grafo, nodazo));
 
+    /*Como insertEdge tiene que ser con dos nodos que esten dentro del grafo, creamos nuevas variables para obtener los nuevos nodos*/
+    long *nIds = NULL;
+    nIds = graph_getNodesId(grafo);
+    if (!nIds){
+        node_free(nodito);
+        node_free(nodazo);
+        graph_free(grafo);
+        return 0;
+    }
+    
+    graph_insertEdge(grafo, nIds[1], nIds[0]);
     printf("Insertando edge: nodo 2 ---> nodo 1\n");
-    graph_insertEdge(grafo, node_getId(nodazo), node_getId(nodito));
+    
 
-    if (graph_areConnected(grafo, node_getId(nodito), node_getId(nodazo)) == FALSE ){
+    if (graph_areConnected(grafo, nIds[0], nIds[1]) == FALSE ){
         printf("Conectados nodo 1 y nodo 2? No\n");
     } else { 
         printf("Conectados nodo 1 y nodo 2? Si\n");
     }
 
-    if (graph_areConnected(grafo, node_getId(nodazo), node_getId(nodito)) == FALSE ){
+    if (graph_areConnected(grafo,nIds[1], nIds[0]) == FALSE ){
         printf("Conectados nodo 2 y nodo 1? No\n");
     } else { 
         printf("Conectados nodo 2 y nodo 1? Si\n");
     }
 
     printf("Insertando nodo 2...resultado...: %d\n", graph_insertNode(grafo, nodazo));
-
-    printf("Grafo \n");
-    graph_print(grafo);
+    
+    printf("Grafo");
+    graph_print(stdout, grafo);
 
     node_free(nodito);
     node_free(nodazo);
     graph_free(grafo);
+    free(nIds);
     return 0;
 }
