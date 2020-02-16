@@ -95,21 +95,22 @@ void graph_free(Graph *g){
 
 Status graph_insertNode(Graph *g, const Node *n){
     Node *aux = NULL;
-    int index = -1;
+    int index = -1, i;
     if (!g || !n) return ERROR;
 
     aux = node_copy(n);
     if (!aux) return ERROR;
 
-    index = find_node_index(g, node_getId(aux));
-    if ((index) != -1){
-        if (node_cmp(g->nodes[index], aux) == 0){
-            free(aux);
+    for (i=0; i<g->num_nodes; i++){
+        if (node_getId(g->nodes[i]) == node_getId(aux)){
+            if (node_cmp(g->nodes[i], aux) == 0){
+                free(aux);
+                return ERROR;
+            }
+            free (g->nodes[i]);
+            g->nodes[i] = aux;
             return ERROR;
         }
-        free (g->nodes[index]);
-        g->nodes[index] = aux;
-        return OK;
     }
 
     g->num_nodes++;
@@ -120,14 +121,20 @@ Status graph_insertNode(Graph *g, const Node *n){
 
 Status graph_insertEdge(Graph *g, const long nId1, const long nId2){
     int index = -1;
-    int cont;
+    int cont=0;
     if (!g) return ERROR;
 
     g->connections[nId1][nId2] = TRUE;
     g->num_edges++;
-    index = find_node_index(g, nId1);
-    cont = node_getConnect(g->nodes[index]);
-    node_setNConnect(g->nodes[index], cont++);
+    
+    for (int i=0; i<g->num_nodes; i++){
+        if (node_getId(g->nodes[i]) == nId1){
+            cont = node_getConnect(g->nodes[i]);
+            cont = cont +1;
+            node_setNConnect(g->nodes[i], cont);
+        }
+    }
+    
 
     return OK;
 }
@@ -207,25 +214,24 @@ long *graph_getConnectionsFrom(const Graph *g, const long fromId){
 }
 
 int graph_print(FILE *pf, const Graph *g){
-    int cont=0, i, j;
-    long *array = NULL;
+    int cont=0, i, j, index;
+
     if (!pf || !g) return -1;
     
     for (i=0; i < g->num_nodes; i++){
-        cont += node_print(pf, g->nodes[i]);
-        printf("\n");
-
-        /*da error en la funcion graph_getConnectionsIndex
-        array = graph_getConnectionsFrom((Graph *)g, node_getId(g->nodes[i]));
-
-        if (!array) return -1;
-
-        for (j=0; (j < g->num_nodes) && (array[j]!= 0); j++){
-            cont += fprintf(pf, " %ld", array[j]);
+        int suma = 0, cont1 = 0;
+        suma = node_print(pf, g->nodes[i]);
+        
+        
+        for (j=0; j <= g->num_nodes; j++){
+            if (g->connections[node_getId(g->nodes[i])][node_getId(g->nodes[j])] == TRUE){
+                cont1 = fprintf(pf, " %ld" ,node_getId(g->nodes[j]));
+            }
         }
-        free(array);
-        */
+        cont = suma + cont;
+        fprintf(pf, "\n");
     }
-    return cont;
+    
+    return  cont;
 }
 

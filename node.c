@@ -94,8 +94,7 @@ Status node_setName(Node *n, const char *name)
 
 Status node_setNConnect(Node *n, const int cn)
 {
-    if (!n || cn < 0)
-        return ERROR;
+    if (!n || cn < 0) return ERROR;
 
     n->nConnect = cn;
     return OK;

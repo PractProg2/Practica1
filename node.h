@@ -98,7 +98,7 @@ Status node_setName (Node *n, const char *name);
 /**
 * @brief Modifies the number of connections of a given node
 * @param n Node address
-* @param id Number of connections for the node
+* @param cn Number of connections for the node
 * @return Returns OK or ERROR in case of error
 */
 Status node_setNConnect (Node *n, const int cn);
