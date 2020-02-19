@@ -1,7 +1,20 @@
+/**
+* @file node.c
+* @author Gonzalo Arcas & Ciro Alonso
+* @date 12 February 2020
+* @brief ADT Node
+*
+* @details definicion de las funciones node.h
+*
+* @see
+*/
 #include "node.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
+
+extern int errno;
 
 #define NAME_L 64 /*!< Maximum node name length */
 
@@ -16,9 +29,10 @@ Node *node_init()
 {
     Node *n;
     n = (Node *)malloc(sizeof(Node));
-    if (!n)
+    if (!n){
+        fprintf(stderr, "%s", strerror(errno));
         return NULL;
-
+    }
     strcpy(n->name, " ");
     n->id = -1;
     n->nConnect = 0;
@@ -140,9 +154,10 @@ void *node_copy(const void *src)
 int node_print(FILE *pf, const void *n)
 {
 
-    if (!pf || !n)
+    if (!pf || !n){
+        fprintf(stderr, "%s", strerror(errno));
         return -1;
-
+    }
     Node *aux = (Node *)n;
-    return fprintf(pf, "[%s, %ld, %d, %d]", aux->name, aux->id, aux->nConnect, aux->label);
+    return fprintf(pf, "[%s, %ld, %d, %d]", aux->name, aux->id, aux->label, aux->nConnect);
 }

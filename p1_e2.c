@@ -1,3 +1,13 @@
+/**
+* @file p1_e2.c
+* @author Gonzalo Arcas & Ciro Alonso
+* @date 19 February 2020
+* @brief segundo ejercicio practica 1
+*
+* @details Comprobacion de las funciones del TAD Node y del TAD Graph
+*
+* @see
+*/
 #include "node.h"
 #include "graph.h"
 #include <stdio.h>
@@ -54,7 +64,7 @@ int main(){
 
     printf("Insertando nodo 2...resultado...: %d\n", graph_insertNode(grafo, nodazo));
     
-    printf("Grafo");
+    printf("Grafo\n");
     graph_print(stdout, grafo);
 
     node_free(nodito);

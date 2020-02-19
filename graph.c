@@ -1,9 +1,25 @@
+/**
+* @file graph.c
+* @author Gonzalo Arcas & Ciro Alonso
+* @date 19 February 2020
+* @brief ADT graph
+*
+* @details Definicion de las funciones de graph.h
+*
+* @see
+*/
+
 #include "graph.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
+
+extern int errno;
 
 #define MAX_NODES 1064
+#define NAME_L 64 /*!< Maximum node name length */
+
 struct _Graph
 {
     Node *nodes[MAX_NODES];                 /*!<Array with the graph nodes */
@@ -96,7 +112,7 @@ void graph_free(Graph *g){
 Status graph_insertNode(Graph *g, const Node *n){
     Node *aux = NULL;
     int index = -1, i;
-    if (!g || !n) return ERROR;
+    if (!g || !n || g->num_nodes >= MAX_NODES) return ERROR;
 
     aux = node_copy(n);
     if (!aux) return ERROR;
@@ -113,9 +129,10 @@ Status graph_insertNode(Graph *g, const Node *n){
         }
     }
 
+    
+    g->nodes[i] = aux;
+    node_setNConnect(g->nodes[i],0);
     g->num_nodes++;
-    g->nodes[g->num_nodes] = aux;
-     
     return OK;
 }
 
@@ -124,6 +141,9 @@ Status graph_insertEdge(Graph *g, const long nId1, const long nId2){
     int cont=0;
     if (!g) return ERROR;
 
+    if (g->connections[nId1][nId2]== TRUE){
+        return ERROR;
+    }
     g->connections[nId1][nId2] = TRUE;
     g->num_edges++;
     
@@ -216,7 +236,10 @@ long *graph_getConnectionsFrom(const Graph *g, const long fromId){
 int graph_print(FILE *pf, const Graph *g){
     int cont=0, i, j, index;
 
-    if (!pf || !g) return -1;
+    if (!pf || !g){
+        fprintf(stderr, "%s", strerror(errno)); 
+        return -1;
+    }
     
     for (i=0; i < g->num_nodes; i++){
         int suma = 0, cont1 = 0;
@@ -235,3 +258,39 @@ int graph_print(FILE *pf, const Graph *g){
     return  cont;
 }
 
+
+Status graph_readFromFile(FILE *fin, Graph *g){
+    int i, numNodes = 0;
+    char name[NAME_L];
+    long id, id1, id2;
+    Label label;
+    Node *n = NULL;
+
+    if (!fin || !g) return ERROR;
+
+    
+
+    n = node_init();
+    if (!n) return ERROR;
+
+    fscanf(fin, "%d", &numNodes);
+
+    for (i=0; i<numNodes; i++){
+        fscanf(fin, "%ld %s %d", &id, name, (int *)&label);
+        node_setId(n, id);
+        node_setName(n, name);
+        node_setLabel(n, label);
+
+        graph_insertNode(g, n);
+    }
+    
+    while (!feof(fin)){
+        fscanf(fin, "%ld %ld", &id1, &id2);
+
+        graph_insertEdge(g, id1, id2);
+    }
+
+    node_free(n);
+    
+    return OK;
+}

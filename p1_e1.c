@@ -1,3 +1,13 @@
+/**
+* @file p1_e1.c
+* @author Gonzalo Arcas & Ciro Alonso
+* @date 19 February 2020
+* @brief primer ejercicio practica 1
+*
+* @details Comprobacion de las funciones del TAD Node
+*
+* @see
+*/
 #include "node.h"
 #include <stdio.h>
 #include <stdlib.h>
