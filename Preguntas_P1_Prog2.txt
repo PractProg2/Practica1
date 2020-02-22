@@ -1,0 +1,51 @@
+
+1.)
+
+Para compilar un archivo y crear un objeto (comprobación de errores)
+
+	gcc -c -g -Wall -ansi -pedantic node.c (todos los ejercicios)
+	gcc -c -g -Wall -ansi -pedantic graph.c (todos los ejercicios)
+	gcc -c -g -Wall -ansi -pedantic p1_e1.c (ejercicio1)
+	gcc -c -g -Wall -ansi -pedantic p1_e2.c (ejercicio2)
+	gcc -c -g -Wall -ansi -pedantic p1_e3.c (ejercicio3)
+
+
+Para crear un ejecutable y enlazar el/los objeto(s)
+
+	gcc node.o graph.o p1_e1.o -lm -o p1_e1 (ejercicio1)
+	gcc node.o graph.o p1_e2.o -lm -o p1_e2 (ejercicio2)
+	gcc node.o graph.o p1_e3.o -lm -o p1_e3 (ejercicio3)
+
+2.a.)
+
+Esta función es incorrecta ya que accede a la estructura Node sin conocer sus atributos.
+
+2.b.)
+
+Esta función está mal porque el nodo que te pasan por argumento no se comprueba si el puntero a nodo que se le pasa tiene un nodo creado o no (falta control de errores con NULL).
+
+2.c.)
+
+Esta función está bien porque en node_init te aseguras que el problema que te encuentras en el 2.b no sucede ya que con doble puntero dices que la función STATUS node_init puede crear correctamente el nodo.
+
+3.)
+
+No está correctamente declarada porque al no tener puntero no puedes acceder al bloque de memoria que serí­a Node.
+
+4.)
+
+Se deberí­a utilizar el puntero porque así­ accedes a todos los atributos de la estructura Node y en el caso contrario solo tendrías un atributo de Node (p).
+
+5.)
+
+La implementación de esta función sería cogiendo el valor de nDest y lo igualaríamos a los valores de la estructura Node con nSource.
+
+La implementación del doble puntero sería válida ya que para los funciones para obtener id, name, connections y label se podría usar el doble puntero de nDest. Ej: node_setId(*nDest, node_getId(nSource)). La diferencia entre ambas implementaciones es que cuando te pasan un doble puntero tienes que reservar memoria para ese nodo y en el caso contrario no haría falta.
+
+6.)
+
+Las funciones del apéndice deben ser privadas porque solamente vamos a utilizar estas funciones privadas en el fichero .c en el que están declaradas, no en otros ficheros .c o .h.
+
+7.)
+
+Sí podría devolver otra estructura en este caso, la estructura Node porque se puede hacer un casting del valor que te pasan por argumento y así devolver la estructura con una variable auxiliar. 
