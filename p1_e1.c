@@ -14,58 +14,58 @@
 #include <string.h>
 
 int main(){
-    Node *nodazo;
-    Node *nodito;
+    Node *n2;
+    Node *n1;
 
-    nodito = node_init();
-    if (!nodito) return -1;
-    nodazo = node_init();
-    if (!nodazo){
-        node_free(nodito);
+    n1 = node_init();
+    if (!n1) return -1;
+    n2 = node_init();
+    if (!n2){
+        node_free(n1);
         return -1;
     }
 
-    node_setName(nodito, "first");
-    node_setName(nodazo, "second");
+    node_setName(n1, "first");
+    node_setName(n2, "second");
 
-    node_setId(nodito, 111);
-    node_setId(nodazo, 222);
+    node_setId(n1, 111);
+    node_setId(n2, 222);
 
-    node_setLabel(nodito, WHITE);
-    node_setLabel(nodazo, WHITE);
+    node_setLabel(n1, WHITE);
+    node_setLabel(n2, WHITE);
 
-    node_print(stdout, nodito);
-    node_print(stdout, nodazo);
+    node_print(stdout, n1);
+    node_print(stdout, n2);
 
     printf("\n");
 
-    if (node_cmp(nodito, nodazo) == 0){
+    if (node_cmp(n1, n2) == 0){
         printf("Son iguales?: Si\n");
     }else {
         printf("Son iguales?: No\n");
     }
 
-    printf("Id del primer nodo: %ld\n", node_getId(nodito));
+    printf("Id del primer nodo: %ld\n", node_getId(n1));
 
-    printf("Nombre del segundo nodo es: %s\n", node_getName(nodazo));
+    printf("Nombre del segundo nodo es: %s\n", node_getName(n2));
 
-    node_free(nodazo);
+    node_free(n2);
 
-    nodazo = node_copy(nodito);
+    n2 = node_copy(n1);
 
-    node_print(stdout, nodito);
-    node_print(stdout, nodazo);
+    node_print(stdout, n1);
+    node_print(stdout, n2);
 
     printf("\n");
 
-    if (node_cmp(nodito, nodazo) == 0){
+    if (node_cmp(n1, n2) == 0){
         printf("Son iguales?: Si\n");
     }else {
         printf("Son iguales?: No\n");
     }
 
-    node_free(nodito);
-    node_free(nodazo);
+    node_free(n1);
+    node_free(n2);
 
     return 0;
 }
