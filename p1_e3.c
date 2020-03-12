@@ -29,7 +29,7 @@ int main(int argc, char *argv[]){
     fin = fopen(argv[1], "r");
     if (!fin ) return ERROR;
     
-    graph_readFromFile(fin, grafo);
+    if (graph_readFromFile(fin, grafo) == ERROR) return -1;
 
     graph_print(stdout, grafo);
 

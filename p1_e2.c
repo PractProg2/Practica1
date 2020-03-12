@@ -61,6 +61,7 @@ int main(){
     } else { 
         printf("Conectados nodo 2 y nodo 1? Si\n");
     }
+    
 
     printf("Insertando nodo 2...resultado...: %d\n", graph_insertNode(grafo, n2));
     
